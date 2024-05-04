@@ -18,7 +18,7 @@ namespace TestEmployeeBackend.Models
         public int RoleId { get; set; }
         public string Fio { get; set; }
         public int? WorkExperience { get; set; }
-        public string DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public int? JobTitleId { get; set; }

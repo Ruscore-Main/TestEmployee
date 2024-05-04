@@ -4,29 +4,30 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using TestEmployeeBackend.Models;
 
 namespace TestEmployeeBackend.Controllers
 {
-    [Route("api/project")]
+    [Route("api")]
     [ApiController]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private TestEmployeeDBContext? _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(TestEmployeeDBContext projectContext)
         {
-            _logger = logger;
+            _db = projectContext;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<JsonResult>>> Get()
         {
-            return View();
-        }
+            List<User> allUsers = await _db.Users.ToListAsync();
 
-        public IActionResult Privacy()
-        {
-            return View();
+
+            return new JsonResult(allUsers);
         }
 
     }

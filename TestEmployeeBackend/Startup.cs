@@ -46,6 +46,10 @@ namespace TestEmployeeBackend
 
             services.AddDbContext<Models.TestEmployeeDBContext>(options => options.UseSqlServer(SqlConnectionIntegratedSecurity));
 
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services.AddControllers();
 

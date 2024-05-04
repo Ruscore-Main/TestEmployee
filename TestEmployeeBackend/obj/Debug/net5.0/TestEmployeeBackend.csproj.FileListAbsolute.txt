@@ -64,3 +64,8 @@ D:\DIPLOM_TEST_EMPLOYEE\TestEmployeeBackend\obj\Debug\net5.0\TestEmployeeBackend
 D:\DIPLOM_TEST_EMPLOYEE\TestEmployeeBackend\obj\Debug\net5.0\ref\TestEmployeeBackend.dll
 D:\DIPLOM_TEST_EMPLOYEE\TestEmployeeBackend\obj\Debug\net5.0\TestEmployeeBackend.pdb
 D:\DIPLOM_TEST_EMPLOYEE\TestEmployeeBackend\obj\Debug\net5.0\TestEmployeeBackend.genruntimeconfig.cache
+D:\DIPLOM_TEST_EMPLOYEE\TestEmployeeBackend\bin\Debug\net5.0\Castle.Core.dll
+D:\DIPLOM_TEST_EMPLOYEE\TestEmployeeBackend\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Proxies.dll
+D:\DIPLOM_TEST_EMPLOYEE\TestEmployeeBackend\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\DIPLOM_TEST_EMPLOYEE\TestEmployeeBackend\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\DIPLOM_TEST_EMPLOYEE\TestEmployeeBackend\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
