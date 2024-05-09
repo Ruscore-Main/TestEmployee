@@ -1,4 +1,4 @@
-import Auth from './pages/Auth/Auth';
+import Auth from './pages/Auth';
 import { Routes, Route } from 'react-router-dom';
 import './scss/app.scss';
 import NotFound from './pages/NotFound';

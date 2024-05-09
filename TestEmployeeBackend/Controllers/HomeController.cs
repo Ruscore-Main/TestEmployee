@@ -10,7 +10,7 @@ using TestEmployeeBackend.Models;
 
 namespace TestEmployeeBackend.Controllers
 {
-    [Route("api")]
+    [Route("api/test")]
     [ApiController]
     public class HomeController : Controller
     {
@@ -22,12 +22,13 @@ namespace TestEmployeeBackend.Controllers
         }
 
         [HttpGet]
+        [Route("jobs")]
         public async Task<ActionResult<IEnumerable<JsonResult>>> Get()
         {
-            List<User> allUsers = await _db.Users.ToListAsync();
+            List<JobTitle> allJobs = await _db.JobTitles.ToListAsync();
 
 
-            return new JsonResult(allUsers);
+            return new JsonResult(allJobs);
         }
 
     }
