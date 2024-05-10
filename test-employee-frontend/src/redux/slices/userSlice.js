@@ -3,9 +3,8 @@ import { userAPI } from 'api/api';
 
 // Регистрация пользователя
 export const regUser = createAsyncThunk('user/regUser', async (params) => {
-  const { login, password, email, phoneNumber, role } = params;
   try {
-    const user = (await userAPI.registerUser(login, password, email, phoneNumber, role)).data;
+    const user = (await userAPI.registerUser(params)).data;
     return user;
   } catch (error) {
     return error.response.data;
@@ -43,7 +42,7 @@ const initialState = {
   dateOfBirth: null,
   email: null,
   phoneNumber: null,
-  jobTitle: null,
+  jobId: null,
   testResults: [],
 };
 
@@ -56,21 +55,12 @@ const userSlice = createSlice({
       state.login = action.payload.login;
       state.password = action.payload.password;
       state.role = action.payload.role;
-      state.email = action.payload.email;
-      state.phoneNumber = action.payload.phoneNumber;
-      state.requests = action.payload.requests;
-      state.favorites = action.payload.favorites;
-
-      state.id = action.payload.id;
-      state.login = action.payload.login;
-      state.password = action.payload.password;
-      state.role = action.payload.role;
       state.fio = action.payload.fio;
       state.workExperience = action.payload.workExperience;
       state.dateOfBirth = action.payload.dateOfBirth;
       state.email = action.payload.email;
       state.phoneNumber = action.payload.phoneNumber;
-      state.jobTitle = action.payload.jobTitle;
+      state.jobId = action.payload.jobId;
       state.testResults = action.payload.testResults;
     },
     removeUser(state) {
@@ -83,7 +73,7 @@ const userSlice = createSlice({
       state.dateOfBirth = null;
       state.email = null;
       state.phoneNumber = null;
-      state.jobTitle = null;
+      state.jobId = null;
       state.testResults = [];
     },
   },

@@ -2,7 +2,10 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { regUser } from '../redux/slices/userSlice';
+
 import swal from 'sweetalert';
+import { useSelector } from 'react-redux';
+import { getJobs } from '../redux/slices/jobsSlice';
 
 const CheckDate = (str) => {
 
@@ -34,17 +37,23 @@ const isValidRegistration = (login, email, phoneNumber, dateOfBirth, pas, pasr) 
   return 'Успешно!';
 };
 
-const Registration = ({ dispatch, isAdmin = false, closeModal = null, updateTable, jobs }) => {
+const Registration = ({ dispatch, isAdmin = false, closeModal = null, updateTable }) => {
   const navigate = useNavigate();
+  const {items: jobs, status} = useSelector(({jobs}) => jobs)
 
   const [login, setLogin] = useState('');
   const [email, setEmail] = useState('');
+  const [fio, setFio] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [workExperience, setWorkExperience] = useState('');
+  const [jobId, setJobId] = useState('');
   const [password, setPassword] = useState('');
   const [passwordR, setPasswordR] = useState('');
   const [textError, setTextError] = useState('');
+
+
+  
 
   let isValid = isValidRegistration(login, email, phoneNumber, dateOfBirth, password, passwordR);
 
@@ -53,25 +62,29 @@ const Registration = ({ dispatch, isAdmin = false, closeModal = null, updateTabl
       regUser({
         login,
         password,
+        fio,
+        workExperience,
+        dateOfBirth,
         email,
         phoneNumber,
-        role: isAdmin ? 'Admin' : 'User',
+        jobId
       }),
     ).then((res) => {
-      if (res.payload?.login !== undefined && !isAdmin) {
-        navigate('/');
-      } else if (res.payload?.login !== undefined && isAdmin) {
+      if (res.payload?.login) {
+        //navigate('/');
         swal({
           icon: 'success',
-          text: 'Администратор успешно добавлен!',
+          text: 'Успешная регистрация!',
         });
-        closeModal && closeModal();
-        updateTable();
       } else {
         setTextError(res.payload);
       }
     });
   };
+
+  React.useEffect(() => {
+    dispatch(getJobs())
+  }, [])
 
   return (
     <>
@@ -87,6 +100,12 @@ const Registration = ({ dispatch, isAdmin = false, closeModal = null, updateTabl
           className="auth__input"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          placeholder="ФИО"
+          className="auth__input"
+          value={fio}
+          onChange={(e) => setFio(e.target.value)}
         />
         <input
           placeholder="+7 (YYY) XXX XX XX"
@@ -109,6 +128,11 @@ const Registration = ({ dispatch, isAdmin = false, closeModal = null, updateTabl
           value={workExperience}
           onChange={(e) => setWorkExperience(e.target.value)}
         />
+        <select className={classNames("auth__input", {disabled: status !== 'success'})} value={jobId} onChange={(e) => setJobId(e.target.value)}>
+          {status !== 'success' && <option>{status}</option> }
+          <option disabled>Выберите вашу должность</option>
+          {jobs.map(el => <option key={el.id} value={el.id}>{el.jobTitleName}</option>)}
+        </select>
         <input
           placeholder="Пароль"
           type="password"

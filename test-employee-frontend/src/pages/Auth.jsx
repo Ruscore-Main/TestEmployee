@@ -2,17 +2,11 @@ import React from 'react';
 import Authorization from '../components/Authorization';
 import Registration from '../components/Registration';
 import classNames from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
-import { getJobs } from '../redux/slices/jobsSlice';
+import { useDispatch } from 'react-redux';
 
 const Auth = () => {
   const [isAuth, setIsAuth] = React.useState(true);
   const dispatch = useDispatch();
-  const {items, status} = useSelector(({jobs}) => jobs)
-
-  React.useEffect(() => {
-    dispatch(getJobs())
-  }, [])
 
   return (
     <div className="container">
@@ -26,7 +20,7 @@ const Auth = () => {
           </span>
         </div>
 
-        {isAuth ? <Authorization dispatch={dispatch} /> : <Registration jobs={items} dispatch={dispatch} />}
+        {isAuth ? <Authorization dispatch={dispatch} /> : <Registration dispatch={dispatch} />}
       </div>
     </div>
   );

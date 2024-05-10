@@ -21,15 +21,7 @@ namespace TestEmployeeBackend.Controllers
             _db = projectContext;
         }
 
-        [HttpGet]
-        [Route("jobs")]
-        public async Task<ActionResult<IEnumerable<JsonResult>>> Get()
-        {
-            List<JobTitle> allJobs = await _db.JobTitles.ToListAsync();
 
-
-            return new JsonResult(allJobs);
-        }
 
     }
 }

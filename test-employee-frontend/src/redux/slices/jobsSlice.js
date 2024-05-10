@@ -1,12 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { testAPI } from 'api/api';
+import { userAPI } from 'api/api';
 
 // Регистрация пользователя
 export const getJobs = createAsyncThunk('jobs/getJobs', async (params) => {
 
-    const jobs = await testAPI.getJobs();
+    const jobs = await userAPI.getJobs();
     return jobs;
 });
+
+// {
+//   "tests": [],
+//   "users": [],
+//   "id": 1,
+//   "jobTitleName": "Должность1"
+// }
 
 const initialState = {
   status: 'loading', // loading | success | error

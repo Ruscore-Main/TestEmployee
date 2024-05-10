@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import './scss/app.scss';
 import NotFound from './pages/NotFound';
 import Header from './components/Header';
+import AdminPage from 'pages/AdminPage';
 
 function App() {
   return (

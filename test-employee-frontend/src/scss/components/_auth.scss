@@ -40,6 +40,8 @@
         font-size: 20px;
         border-radius: 10px;
         border: 1px solid #E6E6E6;
+
+
     }
 
     &__input:focus {
@@ -52,5 +54,14 @@
         font-size: 20px;
     }
 
+    option {
+        padding: 10px 8px;
+        border: 1px solid red;
+    }
+
+    .disabled {
+        opacity: .4;
+        pointer-events: none;
+    }
 
 }

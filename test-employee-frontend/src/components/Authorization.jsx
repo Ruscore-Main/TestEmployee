@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authUser } from '../redux/slices/userSlice';
+import swal from 'sweetalert';
 
 const Authorization = ({ dispatch }) => {
   const [login, setLogin] = useState('');
@@ -13,7 +14,10 @@ const Authorization = ({ dispatch }) => {
     dispatch(authUser({ login, password })).then((res) => {
       console.log(res);
       if (res.payload?.login !== undefined) {
-        navigate('/');
+        swal({
+          icon: 'success',
+          text: 'Успешная авторизация!',
+        });
       } else {
         setTextError(res.payload);
       }

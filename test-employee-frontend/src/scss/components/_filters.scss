@@ -1,0 +1,64 @@
+@import '../variables';
+
+.filters {
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  @media (max-width: 660px) {
+    flex-direction: column;
+
+    .search {
+      margin-bottom: 20px;
+    }
+  }
+
+  .search {
+    border: 1px solid rgba(0, 0, 0, .1);
+    padding: 12px 15px;
+    border-radius: 50px;
+    margin-right: 10px;
+    width: 350px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    @media (max-width: 950px) {
+      width: 250px;
+    }
+
+    svg {
+      width: 20px;
+      opacity: .5;
+      margin-right: 5px;
+    }
+
+    input {
+      font-size: 1em;
+      border: none;
+      width: 300px;
+
+
+      @media (max-width: 950px) {
+        width: 200px;
+      }
+
+    }
+
+    &:focus-within {
+      border-color: rgba($red, 1);
+    }
+
+    .clear {
+      width: 15px;
+
+      &:hover {
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+  }
+
+}

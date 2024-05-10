@@ -10,21 +10,18 @@ const userInstance = axios.create({
   baseURL: BASE_URL + 'user/',
 });
 
+const adminInstance = axios.create({
+  baseURL: BASE_URL + 'admin/',
+});
+
+
 export const testAPI = {
-  getJobs() {
-    return testInstance.get('jobs').then(({ data }) => data);
-  }
+
 }
 
 export const userAPI = {
-  registerUser(login, password, email, phoneNumber, role) {
-    return userInstance.post('registration', {
-      login,
-      password,
-      email,
-      phoneNumber,
-      role,
-    });
+  registerUser(user) {
+    return userInstance.post('registration', user);
   },
   authorizateUser(login, password) {
     return userInstance.post('authorization', { login, password });
@@ -32,4 +29,18 @@ export const userAPI = {
   updateUser(user) {
     return userInstance.post('update', user);
   },
+  getJobs() {
+    return userInstance.get('jobs').then(({ data }) => data);
+  }
 };
+
+export const adminAPI = {
+  getUsers({page, searchValue, limit}) {
+    let fetchURL = `users?page=${page}&limit=${limit}`;
+
+    if (searchValue !== "") {
+      fetchURL += `&searchValue=${searchValue}`;
+    }
+    return adminInstance.get(fetchURL).then(({ data }) => data);
+  },
+}
