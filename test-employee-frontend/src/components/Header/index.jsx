@@ -3,8 +3,14 @@ import s from './Header.module.scss';
 import accountIcon from 'assets/img/account.svg';
 import logoutIcom from 'assets/img/logout.svg';
 import classNames from 'classnames';
+import { useAuth } from 'hooks/useAuth';
+import { useDispatch } from 'react-redux';
+import { removeUser } from '../../redux/slices/userSlice';
 
 const Header = () => {
+  const { isAuth, role } = useAuth();
+  const dispatch = useDispatch();
+
   return (
     <div className={s.header}>
       <div className={s.container}>
@@ -12,12 +18,13 @@ const Header = () => {
           <div className={s.gray}>Тестирование</div>
           <div className={s.red}>сотрудников</div>
         </div>
-
-        <div className={s.icons}>
-          <img className={classNames(s.icon, s.icon_small)} src={logoutIcom} alt="logout" />
-          <img className={s.icon} src={accountIcon} alt="profile" />
-          <button className="button button--outline">Войти</button>
-        </div>
+        {isAuth && (
+          <div className={s.icons}>
+            {role == 'Employee' && <button className="button button--outline">История тестов</button>}
+            <img className={classNames(s.icon, s.icon_small)} src={logoutIcom} onClick={() => dispatch(removeUser())} alt="logout" />
+            <img className={s.icon} src={accountIcon} alt="profile" />
+          </div>
+        )}
       </div>
     </div>
   );

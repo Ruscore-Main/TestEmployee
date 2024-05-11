@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 import { useSelector } from 'react-redux';
 import { getJobs } from '../redux/slices/jobsSlice';
 
-const CheckDate = (str) => {
+export const CheckDate = (str) => {
 
   if (str === '') return true
 
@@ -58,7 +58,8 @@ const Registration = ({ dispatch, isAdmin = false, closeModal = null, updateTabl
   let isValid = isValidRegistration(login, email, phoneNumber, dateOfBirth, password, passwordR);
 
   const onClickRegister = () => {
-    dispatch(
+      setTextError("");
+      dispatch(
       regUser({
         login,
         password,
@@ -71,13 +72,13 @@ const Registration = ({ dispatch, isAdmin = false, closeModal = null, updateTabl
       }),
     ).then((res) => {
       if (res.payload?.login) {
-        //navigate('/');
+        navigate('/');
         swal({
           icon: 'success',
           text: 'Успешная регистрация!',
         });
       } else {
-        setTextError(res.payload);
+        setTextError(res.payload || "Сервер не отвечает...");
       }
     });
   };

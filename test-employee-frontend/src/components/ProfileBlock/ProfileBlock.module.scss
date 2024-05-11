@@ -1,0 +1,15 @@
+.user { 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .data {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span {
+            margin-right: 10px;
+        }
+    }
+}

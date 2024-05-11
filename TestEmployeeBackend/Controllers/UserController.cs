@@ -85,6 +85,7 @@ namespace TestEmployeeBackend.Controllers
 
             UserJson user = new UserJson()
             {
+                id = currentUser.Id,
                 login = login,
                 password = currentUser.Password,
                 role = currentUser.Role.RoleName,
@@ -97,6 +98,38 @@ namespace TestEmployeeBackend.Controllers
             };
 
             return new JsonResult(user);
+        }
+
+
+        // PUT /update
+        // Обновление пользователя
+        [Route("update")]
+        [HttpPut]
+        public async Task<ActionResult<User>> Update(UserJson userJson)
+        {
+            User user = await _db.Users.FirstOrDefaultAsync(el => el.Id == userJson.id);
+            if (user == null)
+            {
+                return NotFound("Пользователь не найден!");
+            }
+
+            User userWithSameLogin = await _db.Users.FirstOrDefaultAsync(el => el.Id != userJson.id && el.Login == userJson.login);
+
+            if (userWithSameLogin != null)
+            {
+                return BadRequest("Пользователь с таким логином уже существует!");
+            }
+
+            user.Login = userJson.login;
+            user.Fio = userJson.fio;
+            user.DateOfBirth = userJson.dateOfBirth;
+            user.Email = userJson.email;
+            user.PhoneNumber = userJson.phoneNumber;
+            
+
+            await _db.SaveChangesAsync();
+
+            return new JsonResult(userJson);
         }
     }
 }

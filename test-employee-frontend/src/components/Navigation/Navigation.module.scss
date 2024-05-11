@@ -1,0 +1,36 @@
+@import 'scss/variables';
+
+.navigation {
+    li {
+        padding: 10px 50px;
+        border: $red solid 1px;
+        border-radius: 30px;
+        text-align: center;
+        margin-top: 10px;
+        transition: all $duration ease-in-out;
+
+
+        cursor: pointer;
+        user-select: none;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &:hover {
+            background-color: darken($red, 1%);
+            transform: translateX(-10px);
+            color: white;
+
+            li { 
+                background-color: none;
+            }
+        }
+
+        &.active { 
+            background-color: $red;
+            color: white;
+        }
+    }
+
+}

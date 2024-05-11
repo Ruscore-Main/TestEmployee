@@ -11,15 +11,17 @@ const Authorization = ({ dispatch }) => {
   let [textError, setTextError] = useState('');
 
   const onClickLogin = () => {
-    dispatch(authUser({ login, password })).then((res) => {
+      setTextError("");
+      dispatch(authUser({ login, password })).then((res) => {
       console.log(res);
       if (res.payload?.login !== undefined) {
         swal({
           icon: 'success',
           text: 'Успешная авторизация!',
         });
+        navigate('/');
       } else {
-        setTextError(res.payload);
+        setTextError(res.payload || "Сервер не отвечает...");
       }
     });
   };

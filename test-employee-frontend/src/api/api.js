@@ -27,7 +27,7 @@ export const userAPI = {
     return userInstance.post('authorization', { login, password });
   },
   updateUser(user) {
-    return userInstance.post('update', user);
+    return userInstance.put('update', user);
   },
   getJobs() {
     return userInstance.get('jobs').then(({ data }) => data);

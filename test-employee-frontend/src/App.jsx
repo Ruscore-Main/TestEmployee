@@ -1,10 +1,7 @@
-import Auth from './pages/Auth';
 import { Routes, Route } from 'react-router-dom';
 import './scss/app.scss';
-import NotFound from './pages/NotFound';
 import Header from './components/Header';
-import AdminPage from 'pages/AdminPage';
-import UserList from 'components/UserList';
+import { Auth, Home, NotFound } from 'pages';
 
 function App() {
   return (
@@ -12,9 +9,10 @@ function App() {
       <Header />
 
       <Routes>
-        <Route path="/" element={<UserList />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          <Route exact path="/login" element={<Auth />} />
+          <Route exact path="/" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
     </div>
   );
 }
