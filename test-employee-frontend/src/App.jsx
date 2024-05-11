@@ -4,6 +4,7 @@ import './scss/app.scss';
 import NotFound from './pages/NotFound';
 import Header from './components/Header';
 import AdminPage from 'pages/AdminPage';
+import UserList from 'components/UserList';
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       <Header />
 
       <Routes>
-        <Route path="/" element={<Auth />} />
+        <Route path="/" element={<UserList />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

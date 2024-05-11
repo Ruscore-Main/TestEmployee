@@ -38,7 +38,7 @@ const UserList = () => {
 
 
   return (
-    <>
+    <div className="container">
       <div className="filters">
         <AddUser updateTable={updateTable} />
         <Search
@@ -56,7 +56,7 @@ const UserList = () => {
           setCurrentPage={(page) => dispatch(setCurrentPage(page))}
         />
       )}
-    </>
+    </div>
   );
 };
 
