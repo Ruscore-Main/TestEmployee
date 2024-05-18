@@ -16,7 +16,13 @@ const adminInstance = axios.create({
 
 
 export const testAPI = {
+  getTests(jobTitle) {
+    return testInstance.get()
+  },
 
+  addTest(test) {
+    return testInstance.post('addTest', test);
+  }
 }
 
 export const userAPI = {

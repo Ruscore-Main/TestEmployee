@@ -38,7 +38,8 @@ const UserList = () => {
 
 
   return (
-    <div className="container">
+    <div>
+      <h2 className="mb-3">Список сотрудников</h2>
       <div className="filters">
         <AddUser updateTable={updateTable} />
         <Search

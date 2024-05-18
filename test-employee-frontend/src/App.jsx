@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import './scss/app.scss';
 import Header from './components/Header';
-import { Auth, Home, NotFound } from 'pages';
+import { AdminPage, Auth, Home, NotFound } from 'pages';
 
 function App() {
   return (

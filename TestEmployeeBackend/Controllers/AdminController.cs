@@ -22,7 +22,7 @@ namespace TestEmployeeBackend.Controllers
         // Получение всех пользователей
         [Route("users")]
         [HttpGet]
-        public async Task<ActionResult> GetUsers(int? page, string searchValue, int limit = 10)
+        public async Task<ActionResult> GetUsers(int? page, string searchValue, int limit = 6)
         {
             List<User> users = await _db.Users.ToListAsync();
 
@@ -58,6 +58,7 @@ namespace TestEmployeeBackend.Controllers
 
                 usersJson.Add(userJson);
             });
+
 
             ResponseUserJson responseUser = new ResponseUserJson()
             {

@@ -35,6 +35,7 @@ const ProfileBlock = () => {
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
   const date = dateOfBirth && new Date(dateOfBirth).toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
   const [textError, setTextError] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
 
   
   const onSaveClick = () => {
@@ -53,6 +54,12 @@ const ProfileBlock = () => {
   }
 
   const isValid = isValidUpdate(login, fio, email, dateOfBirth, phoneNumber);
+
+  React.useEffect(() => {
+    setIsDisabled(isValid !== "Успешно!");
+  }, [login, fio, email, dateOfBirth, phoneNumber])
+
+  React.useEffect(() => { setIsDisabled(true) }, [])
   
   return (
     <div className={s.user}>
@@ -78,7 +85,7 @@ const ProfileBlock = () => {
         <input type="text" placeholder="Номер телефона" className="input" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
       </div>
       <p className='not-valid'>{textError} {isValid !== "Успешно!" ? isValid : ''}</p>
-      <button className={classNames('button button--outline', { disabled: isValid !== "Успешно!" })} onClick={onSaveClick}>Сохранить</button>
+      <button className={classNames('button button--outline', { disabled: isDisabled })} onClick={onSaveClick}>Сохранить</button>
     </div>
   )
 }

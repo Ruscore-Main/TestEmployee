@@ -78,11 +78,7 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(regUser.fulfilled, (state, action) => {
-      if (action.payload?.login) {
-        userSlice.caseReducers.setUser(state, action);
-      }
-    });
+
     builder.addCase(authUser.fulfilled, (state, action) => {
       if (action.payload?.login) {
         userSlice.caseReducers.setUser(state, action);

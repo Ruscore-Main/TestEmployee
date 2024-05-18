@@ -57,6 +57,9 @@ const Registration = ({ dispatch, isAdmin = false, closeModal = null, updateTabl
 
   let isValid = isValidRegistration(login, email, phoneNumber, dateOfBirth, password, passwordR);
 
+
+  
+
   const onClickRegister = () => {
       setTextError("");
       dispatch(
@@ -71,14 +74,17 @@ const Registration = ({ dispatch, isAdmin = false, closeModal = null, updateTabl
         jobId
       }),
     ).then((res) => {
-      if (res.payload?.login) {
-        navigate('/');
+      if (res.payload?.login !== undefined && !isAdmin) {
+        navigate("/");
+      } else if (res.payload?.login !== undefined && isAdmin) {
         swal({
-          icon: 'success',
-          text: 'Успешная регистрация!',
+          icon: "success",
+          text: "Сотрудник успешно добавлен!"
         });
+        closeModal && closeModal();
+        updateTable();
       } else {
-        setTextError(res.payload || "Сервер не отвечает...");
+        setTextError(res.payload);
       }
     });
   };

@@ -5,7 +5,7 @@ export const fetchUsers = createAsyncThunk(
   "admin/fetchUsers",
   async (params) => {
     // params === { searchValue, currentPage };
-    const data = await adminAPI.getUsers({limit: 10, ...params});
+    const data = await adminAPI.getUsers({limit: 5, ...params});
     return data;
   }
 );

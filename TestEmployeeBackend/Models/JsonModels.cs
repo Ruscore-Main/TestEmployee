@@ -20,6 +20,22 @@ namespace TestEmployeeBackend.Models
         public int? jobId { get; set; }
     }
 
+    // Json Model of User
+    public class TestJson
+    {
+        public int? id { get; set; }
+        public string name { get; set; }
+        public int? jobId { get; set; }
+        public int? timeTest { get; set; }
+    }
+
+    // Json Model for User list
+    public class ResponseTestJson
+    {
+        public int amountPages { get; set; }
+        public List<TestJson> items { get; set; }
+    }
+
     // Json Model for Login
     public class UserRequest
     {

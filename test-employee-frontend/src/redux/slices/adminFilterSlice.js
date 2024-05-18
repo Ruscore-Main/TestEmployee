@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState = {
-    currentPage: 1,
-    searchValue: ''
+  currentPage: 1,
+  searchValue: ''
 };
 
 const adminFilterSlice = createSlice({
@@ -11,11 +11,11 @@ const adminFilterSlice = createSlice({
   initialState,
   reducers: {
     setSearchValue(state, action) {
-        state.currentPage = 1;
-        state.searchValue = action.payload;
+      state.currentPage = 1;
+      state.searchValue = action.payload;
     },
     setCurrentPage(state, action) {
-        state.currentPage = action.payload;
+      state.currentPage = action.payload;
     },
     resetFilters(state) {
       state.searchValue = "";

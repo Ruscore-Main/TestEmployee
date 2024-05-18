@@ -13,7 +13,7 @@ const AddUser = ({ updateTable }) => {
         className="button button--outline"
         onClick={() => setIsModal(true)}
       >
-        Добавить админа
+        Добавить сотрудника
       </button>
 
       <Modal show={isModal} onHide={() => setIsModal(false)} className="p-2">

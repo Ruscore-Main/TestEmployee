@@ -1,14 +1,16 @@
 import React from 'react';
 import s from './Navigation.module.scss';
 
-const Navigation = () => {
+const Navigation = ({ items, active, setActive }) => {
   return (
     <ul className={s.navigation}>
-      <li className={s.active}>Сотрудники</li>
-      <li>Тесты</li>
-      <li>Отчеты</li>
+      {items.map((el, i) => (
+        <li key={i} onClick={() => setActive(i)} className={i == active ? s.active : ''}>
+          {el}
+        </li>
+      ))}
     </ul>
-  )
-}
+  );
+};
 
-export default Navigation
+export default Navigation;
