@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import './scss/app.scss';
 import Header from './components/Header';
 import { AdminPage, Auth, Home, NotFound } from 'pages';
+import EditTest from 'pages/EditTest';
 
 function App() {
   return (
@@ -9,8 +10,9 @@ function App() {
       <Header />
 
       <Routes>
-          <Route exact path="/login" element={<Auth />} />
           <Route exact path="/" element={<Home />} />
+          <Route exact path="/login" element={<Auth />} />
+          <Route exact path="edit-test/:id" element={<EditTest />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
     </div>

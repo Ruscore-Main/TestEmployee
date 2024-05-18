@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTests, setCurrentTestPage } from '../../redux/slices/testSlice';
 import AddTest from '../../components/AddTest';
 import Pagination from 'components/Pagination';
+import { getJobs } from '../../redux/slices/jobsSlice';
 
 const TestList = () => {
   const { items, status, currentPage, amountPages } = useSelector(({ tests }) => tests);
@@ -22,7 +23,9 @@ const TestList = () => {
     updateTable();
   }, [currentPage]);
 
-
+  React.useEffect(() => {
+    dispatch(getJobs())
+  }, [])
 
   return (
     <div>

@@ -20,13 +20,33 @@ namespace TestEmployeeBackend.Models
         public int? jobId { get; set; }
     }
 
-    // Json Model of User
+    // Json Model of Test
     public class TestJson
     {
         public int? id { get; set; }
         public string name { get; set; }
         public int? jobId { get; set; }
         public int? timeTest { get; set; }
+        public List<QuestionJson> questions { get; set; }
+    }
+
+    // Json Model of Answer
+    public class AnswerJson
+    {
+        public int id { get; set; }
+        public string answerText { get; set; }
+        public bool? isTrue { get; set; }
+        public int? questionId { get; set; }
+    }
+
+
+    // Json Model of Question
+    public class QuestionJson
+    {
+        public int id { get; set; }
+        public string status { get; set; }
+        public int? testId { get; set; }
+        public List<AnswerJson> answers { get; set; }
     }
 
     // Json Model for User list

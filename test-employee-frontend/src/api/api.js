@@ -20,6 +20,10 @@ export const testAPI = {
     return testInstance.get()
   },
 
+  getFullTest(id) {
+    return testInstance.get(`${id}`)
+  },
+
   addTest(test) {
     return testInstance.post('addTest', test);
   }

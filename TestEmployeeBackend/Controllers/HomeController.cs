@@ -59,9 +59,62 @@ namespace TestEmployeeBackend.Controllers
             return new JsonResult(responseTestJson);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Test>> GetFull(int id)
+        {
+            Test foundTest = await _db.Tests.FirstOrDefaultAsync(el => el.Id == id);
+            if (foundTest == null)
+            {
+                return NotFound();
+            }
+
+            List<QuestionJson> questionsJson = new List<QuestionJson>();
+
+
+            // Получение всех вопросов
+            foundTest.Questions.ToList().ForEach(el =>
+            {
+
+                // Получение всех ответов
+                List<AnswerJson> answersJsons = new List<AnswerJson>();
+                el.Answers.ToList().ForEach(el => {
+                    AnswerJson answerJson = new AnswerJson()
+                    {
+                        id = el.Id,
+                        answerText = el.AnswerText,
+                        isTrue = el.IsTrue,
+                        questionId = el.QuestionId
+                    };
+
+                    answersJsons.Add(answerJson);
+                });
+
+                QuestionJson questionJson = new QuestionJson()
+                {
+                    id = el.Id,
+                    status = el.Status,
+                    testId = el.TestId,
+                    answers = answersJsons
+                };
+
+                questionsJson.Add(questionJson);
+            });
+
+            TestJson testJson = new TestJson()
+            {
+                id = foundTest.Id,
+                name = foundTest.Name,
+                jobId = foundTest.JobTitleId,
+                timeTest = foundTest.TimeTest,
+                questions = questionsJson
+            };
+
+            return new JsonResult(testJson);
+        }
+
         [HttpPost]
         [Route("addTest")]
-        public async Task<ActionResult<Test>> AddTest(TestJson test)
+        public async Task<ActionResult<TestJson>> AddTest(TestJson test)
         {
             Test newTest = new Test()
             {

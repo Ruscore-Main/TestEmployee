@@ -1,11 +1,9 @@
-import React from 'react';
+import React from 'react'
 import { Table } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const TestTable = ({ status, items }) => {
-  const {items: jobs} = useSelector(({jobs}) => jobs);
-  return (
+const QuestionTable = ({ status, items }) => {
     <div className="container">
       <Table hover responsive striped className="mt-2 mb-4">
         <thead>
@@ -44,7 +42,6 @@ const TestTable = ({ status, items }) => {
         </tbody>
       </Table>
     </div>
-  );
-};
+}
 
-export default TestTable;
+export default QuestionTable

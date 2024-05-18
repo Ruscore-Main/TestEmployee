@@ -28,10 +28,8 @@ const jobsSlice = createSlice({
   extraReducers: (builder) => {
 
     builder.addCase(getJobs.pending, (state) => {
-
         state.status = 'loading';
         state.items = [];
-
     });
 
     builder.addCase(getJobs.fulfilled, (state, action) => {
@@ -43,6 +41,7 @@ const jobsSlice = createSlice({
         state.status = 'error';
         state.items = [];
     });
+    
   },
 });
 
