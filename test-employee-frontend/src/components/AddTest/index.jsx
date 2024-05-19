@@ -17,9 +17,9 @@ const AddTest = ({ updateTable, dispatch }) => {
 
   const onClickAdd = () => {
     setTextError('');
+
     dispatch(
       addTest({
-
         name,
         timeTest: +timeTest,
         jobId: +jobId,
@@ -39,7 +39,11 @@ const AddTest = ({ updateTable, dispatch }) => {
   };
 
   React.useEffect(() => {
-    dispatch(getJobs());
+    dispatch(getJobs()).then(res => {
+      if (res.payload?.length > 0) {
+        setJobId(res.payload[0]?.id);
+      }
+    });
   }, []);
 
   return (
@@ -75,7 +79,7 @@ const AddTest = ({ updateTable, dispatch }) => {
                 <option disabled>{jobsStatus}</option>
               ) : (
                 <>
-                  <option disabled>Выберите вашу должность</option>
+                  <option disabled>Выберите должность</option>
                   {jobs.map((el) => (
                     <option key={el.id} value={el.id}>
                       {el.jobTitleName}
@@ -85,7 +89,7 @@ const AddTest = ({ updateTable, dispatch }) => {
               )}
             </select>
             <button
-              className={classNames('button')}
+              className={classNames('button', {disabled: name === "" || timeTest === ""})}
               onClick={onClickAdd}>
               Добавить
             </button>

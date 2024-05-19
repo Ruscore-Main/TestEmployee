@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { testAPI } from 'api/api';
 
 export const fetchTests = createAsyncThunk('tests/fetchTests', async (params) => {
-  const tests = (await testAPI.getTests()).data;
+  const tests = (await testAPI.getTests(params)).data;
 
   return tests;
 });

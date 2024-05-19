@@ -28,7 +28,7 @@ namespace TestEmployeeBackend.Controllers
 
             if (searchValue != null)
             {
-                users = users.Where(el => el.Login.ToLower().Contains(searchValue.ToLower())).ToList();
+                users = users.Where(el => el.Fio.ToLower().Contains(searchValue.ToLower())).ToList();
             }
 
             int amountPages = Convert.ToInt32(Math.Ceiling(users.Count / (float)limit));

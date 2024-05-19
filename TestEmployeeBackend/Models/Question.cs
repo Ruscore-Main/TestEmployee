@@ -15,6 +15,7 @@ namespace TestEmployeeBackend.Models
         public int Id { get; set; }
         public string Status { get; set; }
         public int? TestId { get; set; }
+        public string QuestionText { get; set; }
 
         public virtual Test Test { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }

@@ -6,6 +6,7 @@ import adminSlice from './slices/adminSlice';
 import adminFilterSlice from './slices/adminFilterSlice';
 import testSlice from './slices/testSlice';
 import fullTestSlice from './slices/fullTestSlice';
+import questionSlice from './slices/questionSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ export const store = configureStore({
     admin: adminSlice,
     adminFilter: adminFilterSlice,
     tests: testSlice,
-    fullTest: fullTestSlice
+    fullTest: fullTestSlice,
+    questions: questionSlice
   },
 });
 

@@ -20,7 +20,7 @@ namespace TestEmployeeBackend.Controllers
         {
             _db = projectContext;
         }
-        
+
         [HttpGet]
         public async Task<ActionResult<Test>> Get(int? page, int? jobId, int limit = 6)
         {
@@ -59,6 +59,48 @@ namespace TestEmployeeBackend.Controllers
             return new JsonResult(responseTestJson);
         }
 
+        [HttpGet]
+        [Route("questions")]
+        public async Task<ActionResult<Test>> GetQuestions(int? page, string searchValue, int limit = 6)
+        {
+            List<Question> allQuestions = await _db.Questions.ToListAsync();
+            if (searchValue != null)
+            {
+                allQuestions = allQuestions.Where(el => el.QuestionText.ToLower().Contains(searchValue.ToLower())).ToList();
+            }
+
+            int amountPages = Convert.ToInt32(Math.Ceiling(allQuestions.Count / (float)limit));
+
+            if (page != null)
+            {
+                allQuestions = allQuestions.Skip(limit * ((int)page - 1)).Take(limit).ToList();
+            }
+
+            List<QuestionJson> questionsJson = new List<QuestionJson>();
+
+            allQuestions.ForEach(question =>
+            {
+                QuestionJson questionJson = new QuestionJson()
+                {
+                    id = question.Id,
+                    questionText = question.QuestionText,
+                    status = question.Status,
+                    testId = question.TestId
+                };
+
+                questionsJson.Add(questionJson);
+            });
+
+
+            ResponseQuestionJson responseUser = new ResponseQuestionJson()
+            {
+                items = questionsJson,
+                amountPages = amountPages
+            };
+
+            return new JsonResult(responseUser);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Test>> GetFull(int id)
         {
@@ -93,6 +135,7 @@ namespace TestEmployeeBackend.Controllers
                 {
                     id = el.Id,
                     status = el.Status,
+                    questionText = el.QuestionText,
                     testId = el.TestId,
                     answers = answersJsons
                 };
@@ -129,6 +172,76 @@ namespace TestEmployeeBackend.Controllers
             test.id = newTest.Id;
 
             return new JsonResult(test);
+        }
+
+        [HttpPost]
+        [Route("addQuestion")]
+        public async Task<ActionResult<TestJson>> AddQuestion(QuestionJson question)
+        {
+
+            List<Answer> answers = new List<Answer>();
+
+            Question newQuestion = new Question()
+            {
+                TestId = question.testId,
+                QuestionText = question.questionText,
+                Status = "Ожидает подтверждения",
+            };
+
+            question.answers.ForEach(el =>
+            {
+                answers.Add(new Answer()
+                {
+                    AnswerText = el.answerText,
+                    IsTrue = el.isTrue,
+                    QuestionId = newQuestion.Id
+                });
+            });
+
+            newQuestion.Answers = answers;
+
+            await _db.Questions.AddAsync(newQuestion);
+            await _db.SaveChangesAsync();
+
+            question.id = newQuestion.Id;
+
+            return new JsonResult(question);
+        }
+
+        [HttpDelete]
+        [Route("deleteQuestion/{id}")]
+        public async Task<ActionResult<TestJson>> DeleteQuestion(int id)
+        {
+
+            Question foundQuestion = await _db.Questions.FirstOrDefaultAsync(el => el.Id == id);
+
+            if (foundQuestion == null)
+            {
+                return NotFound();
+            }
+
+            _db.Questions.Remove(foundQuestion);
+            await _db.SaveChangesAsync();
+
+            return Ok(foundQuestion);
+        }
+
+        [HttpPut]
+        [Route("updateQuestion/{id}")]
+        public async Task<ActionResult<TestJson>> UpdateQuestion(QuestionJson question)
+        {
+            Question foundQuestion = await _db.Questions.FirstOrDefaultAsync(el => el.Id == question.id);
+
+            if (foundQuestion == null)
+            {
+                return NotFound();
+            }
+
+            foundQuestion.QuestionText = question.questionText;
+
+            await _db.SaveChangesAsync();
+
+            return Ok(foundQuestion);
         }
     }
 }

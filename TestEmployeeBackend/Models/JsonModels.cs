@@ -44,6 +44,7 @@ namespace TestEmployeeBackend.Models
     public class QuestionJson
     {
         public int id { get; set; }
+        public string questionText { get; set; }
         public string status { get; set; }
         public int? testId { get; set; }
         public List<AnswerJson> answers { get; set; }
@@ -69,5 +70,13 @@ namespace TestEmployeeBackend.Models
     {
         public int amountPages { get; set; }
         public List<UserJson> items { get; set; }
+    }
+
+
+    // Json Model for Question list
+    public class ResponseQuestionJson
+    {
+        public int amountPages { get; set; }
+        public List<QuestionJson> items { get; set; }
     }
 }

@@ -6,6 +6,11 @@ body {
   background-color: $background;
 }
 
+.icon {
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
 .not-valid {
   color: #E6808A !important;
   display: flex;
@@ -26,4 +31,5 @@ body {
   width: $container-width;
   margin: 20px auto;
   padding: 0px;
+  min-height: 50vh;
 }

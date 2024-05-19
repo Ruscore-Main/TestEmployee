@@ -90,7 +90,11 @@ const Registration = ({ dispatch, isAdmin = false, closeModal = null, updateTabl
   };
 
   React.useEffect(() => {
-    dispatch(getJobs())
+    dispatch(getJobs()).then(res => {
+      if (res.payload?.length > 0) {
+        setJobId(res.payload[0]?.id);
+      }
+    });
   }, [])
 
   return (

@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from 'hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import AdminPage from './AdminPage';
+import DirectorPage from './DirectorPage';
 
 const Home = () => {
   const { isAuth, role } = useAuth();
@@ -12,6 +13,7 @@ const Home = () => {
 
   return <div>
     {role == "Admin" && <AdminPage />}
+    {role == "Director" && <DirectorPage />}
   </div>;
 };
 

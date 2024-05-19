@@ -9,15 +9,15 @@ const getDate = (date) => {
   });
 };
 
-const UserTable = ({ items, status }) => {
+const UserTable = ({ items, status, role }) => {
   return (
     <div className="container">
       <Table hover responsive striped className="mt-2 mb-4">
         <thead>
           <tr>
             <th>#</th>
-            <th>Логин</th>
-            <th>Пароль</th>
+            {role == "Director" || <th>Логин</th>}
+            {role == "Director" || <th>Пароль</th>}
             <th>ФИО</th>
             <th>Должность</th>
             <th>Email</th>
@@ -31,8 +31,8 @@ const UserTable = ({ items, status }) => {
             items.map((user) => (
               <tr key={user.id}>
                 <td>{user.id}</td>
-                <td>{user.login}</td>
-                <td>{user.password}</td>
+                {role == "Director" || <td>{user.login}</td>}
+                {role == "Director" || <td>{user.password}</td>}
                 <td>{user.fio || '-'}</td>
                 <td>{user.jobId || '-'}</td>
                 <td>{user.email || '-'}</td>

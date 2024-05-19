@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-content: space-around;
+
+    .addAnswer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        button { 
+            margin-left: 15px;
+        }
+    }
+
+    .answer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        .answerInput {
+            margin-bottom: 5px;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 5px;
+            text-align: center;
+        }
+
+        &:last-of-type {
+            margin-bottom: 20px;
+        }
+    
+        .trueAnswer {
+            background-color: #69B557;
+            color: white;
+        }
+    
+        .falseAnswer {
+            background-color: red;
+            color: white;
+        }
+
+        .deleteAnswer {
+            width: 25px;
+            margin-left: 20px;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+    }
+}

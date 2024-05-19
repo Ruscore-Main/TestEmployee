@@ -15,7 +15,7 @@ const TestList = () => {
     dispatch(
       fetchTests({
         page: currentPage,
-      }),
+      })
     );
   };
 

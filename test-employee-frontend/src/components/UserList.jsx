@@ -8,6 +8,7 @@ import { resetFilters, setCurrentPage, setSearchValue } from "../redux/slices/ad
 import { fetchUsers } from "../redux/slices/adminSlice";
 import AddUser from "components/AddUser";
 import Search from "components/Search";
+import { useAuth } from "hooks/useAuth";
 
 const UserList = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const UserList = () => {
   const { searchValue, currentPage } = useSelector(
     ({ adminFilter }) => adminFilter
   );
+  const {role} = useAuth();
 
   useEffect(() => {
     updateTable();
@@ -41,13 +43,13 @@ const UserList = () => {
     <div>
       <h2 className="mb-3">Список сотрудников</h2>
       <div className="filters">
-        <AddUser updateTable={updateTable} />
+        {role == "Director" || <AddUser updateTable={updateTable} />}
         <Search
           setSearchValue={setSearch}
-          placeholder="Поиск пользователя.."
+          placeholder="Поиск пользователя по ФИО.."
         />
       </div>
-      <UserTable items={users} status={status} />
+      <UserTable role={role} items={users} status={status} />
       {amountPages < 2 ? (
         ""
       ) : (

@@ -4,6 +4,9 @@ const BASE_URL = 'https://localhost:44390/api/';
 
 const testInstance = axios.create({
   baseURL: BASE_URL + 'test/',
+  headers: {
+    'Content-Type': 'application/json',
+  }
 });
 
 const userInstance = axios.create({
@@ -16,8 +19,8 @@ const adminInstance = axios.create({
 
 
 export const testAPI = {
-  getTests(jobTitle) {
-    return testInstance.get()
+  getTests({jobTitle, page}) {
+    return testInstance.get(`?page=${page}`)
   },
 
   getFullTest(id) {
@@ -26,6 +29,22 @@ export const testAPI = {
 
   addTest(test) {
     return testInstance.post('addTest', test);
+  },
+
+  addQuestion(question) {
+    return testInstance.post('addQuestion', question);
+  },
+
+  getQuestions({page, searchValue, limit}) {
+    return testInstance.get(`questions?page=${page}&limit=${limit}&searchValue=${searchValue}`)
+  },
+
+  deleteQuestion(questionId) {
+    return testInstance.delete(`deleteQuestion/${questionId}`)
+  },
+
+  updateQuestion(question) {
+    return testInstance.put(`updateQuestion/${question.id}`, question)
   }
 }
 

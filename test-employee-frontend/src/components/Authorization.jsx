@@ -9,9 +9,11 @@ const Authorization = ({ dispatch }) => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   let [textError, setTextError] = useState('');
+  const [isButtonBlocked, setIsButtonBlocked] = useState(false); 
 
   const onClickLogin = () => {
       setTextError("");
+      setIsButtonBlocked(true);
       dispatch(authUser({ login, password })).then((res) => {
       console.log(res);
       if (res.payload?.login !== undefined) {
@@ -22,6 +24,7 @@ const Authorization = ({ dispatch }) => {
         navigate('/');
       } else {
         setTextError(res.payload || "Сервер не отвечает...");
+        setIsButtonBlocked(false);
       }
     });
   };
@@ -46,7 +49,7 @@ const Authorization = ({ dispatch }) => {
       </div>
 
       <button
-        className={classNames('button', { disabled: login.length === 0 || password.length === 0 })}
+        className={classNames('button', { disabled: login.length === 0 || password.length === 0 || isButtonBlocked})}
         onClick={onClickLogin}>
         Войти
       </button>
