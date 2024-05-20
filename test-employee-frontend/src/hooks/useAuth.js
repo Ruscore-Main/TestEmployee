@@ -11,6 +11,7 @@ export const useAuth = () => {
     email,
     phoneNumber,
     jobId,
+    jobTitle,
     testResults,
   } = useSelector(({ user }) => user);
   
@@ -25,6 +26,7 @@ export const useAuth = () => {
     email,
     phoneNumber,
     jobId,
+    jobTitle,
     testResults,
   };
 };

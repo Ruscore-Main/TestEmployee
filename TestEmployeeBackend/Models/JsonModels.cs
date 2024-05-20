@@ -18,6 +18,7 @@ namespace TestEmployeeBackend.Models
         public string email { get; set; }
         public string phoneNumber { get; set; }
         public int? jobId { get; set; }
+        public string jobTitle { get; set; }
     }
 
     // Json Model of Test
@@ -26,6 +27,7 @@ namespace TestEmployeeBackend.Models
         public int? id { get; set; }
         public string name { get; set; }
         public int? jobId { get; set; }
+        public string jobTitle { get; set; }
         public int? timeTest { get; set; }
         public List<QuestionJson> questions { get; set; }
     }

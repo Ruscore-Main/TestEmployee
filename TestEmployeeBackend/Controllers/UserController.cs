@@ -64,6 +64,7 @@ namespace TestEmployeeBackend.Controllers
 
             userJson.id = newUser.Id;
             userJson.role = newUser.Role.RoleName;
+            userJson.jobTitle = newUser.JobTitle.JobTitleName;
 
             return new JsonResult(userJson);
         }
@@ -94,7 +95,8 @@ namespace TestEmployeeBackend.Controllers
                 dateOfBirth = currentUser.DateOfBirth,
                 email = currentUser.Email,
                 phoneNumber = currentUser.PhoneNumber,
-                jobId = currentUser.JobTitleId
+                jobId = currentUser.JobTitleId,
+                jobTitle = currentUser.JobTitle.JobTitleName
             };
 
             return new JsonResult(user);

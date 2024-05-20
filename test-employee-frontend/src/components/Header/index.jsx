@@ -32,7 +32,7 @@ const Header = () => {
               onClick={() => dispatch(removeUser())}
               alt="logout"
             />
-            <Link to="/"><img className={s.icon} src={accountIcon} alt="profile" /></Link>
+            {role != 'Employee' && <Link to="/"><img className={s.icon} src={accountIcon} alt="profile" /></Link>}
           </div>
         )}
       </div>

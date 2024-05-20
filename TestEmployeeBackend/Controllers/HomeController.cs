@@ -46,6 +46,7 @@ namespace TestEmployeeBackend.Controllers
                     id = el.Id,
                     name = el.Name,
                     jobId = el.JobTitleId,
+                    jobTitle = el.JobTitle.JobTitleName,
                     timeTest = el.TimeTest
                 });
             });

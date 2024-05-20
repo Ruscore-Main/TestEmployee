@@ -19,8 +19,12 @@ const adminInstance = axios.create({
 
 
 export const testAPI = {
-  getTests({jobTitle, page}) {
-    return testInstance.get(`?page=${page}`)
+  getTests({jobId, page}) {
+    let url = `?page=${page}`;
+    if (jobId) {
+      url += `&jobId=${jobId}`;
+    }
+    return testInstance.get(url)
   },
 
   getFullTest(id) {

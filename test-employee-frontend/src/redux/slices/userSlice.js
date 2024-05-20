@@ -43,6 +43,7 @@ const initialState = {
   email: null,
   phoneNumber: null,
   jobId: null,
+  jobTitle: "",
   testResults: [],
 };
 
@@ -61,6 +62,7 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.phoneNumber = action.payload.phoneNumber;
       state.jobId = action.payload.jobId;
+      state.jobTitle = action.payload.jobTitle;
       state.testResults = action.payload.testResults;
     },
     removeUser(state) {
@@ -74,6 +76,7 @@ const userSlice = createSlice({
       state.email = null;
       state.phoneNumber = null;
       state.jobId = null;
+      state.jobTitle = "";
       state.testResults = [];
     },
   },
