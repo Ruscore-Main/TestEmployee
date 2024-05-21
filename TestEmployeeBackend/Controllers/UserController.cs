@@ -65,6 +65,7 @@ namespace TestEmployeeBackend.Controllers
             userJson.id = newUser.Id;
             userJson.role = newUser.Role.RoleName;
             userJson.jobTitle = newUser.JobTitle.JobTitleName;
+            userJson.testResults = new List<TestResultJson>();
 
             return new JsonResult(userJson);
         }
@@ -99,6 +100,25 @@ namespace TestEmployeeBackend.Controllers
                 jobTitle = currentUser.JobTitle.JobTitleName
             };
 
+            List<TestResultJson> testResultsJson = new List<TestResultJson>();
+
+            currentUser.TestResults.ToList().ForEach(el =>
+            {
+                testResultsJson.Add(new TestResultJson()
+                {
+                    id = el.Id,
+                    userId = el.UserId,
+                    testId = el.TestId,
+                    timeSpent = el.TimeSpent,
+                    countTrueAnswers = el.CountTrueAnswers,
+                    countQuestions = el.CountQuestions,
+                    DatePassing = el.DatePassing,
+                    testName = el.Test.Name
+                });
+            });
+
+            user.testResults = testResultsJson;
+
             return new JsonResult(user);
         }
 
@@ -132,6 +152,105 @@ namespace TestEmployeeBackend.Controllers
             await _db.SaveChangesAsync();
 
             return new JsonResult(userJson);
+        }
+         
+        // Post /setTestResult
+        [Route("setTestResult")]
+        [HttpPost]
+        public async Task<ActionResult<TestResultJson>> SetTestResult(TestResultJson testResultJson)
+        {
+            TestResult testResult = new TestResult()
+            {
+                UserId = testResultJson.userId,
+                TestId = testResultJson.testId,
+                TimeSpent = testResultJson.timeSpent,
+                CountTrueAnswers = testResultJson.countTrueAnswers,
+                CountQuestions = testResultJson.countQuestions,
+                DatePassing = testResultJson.DatePassing
+            };
+
+            await _db.TestResults.AddAsync(testResult);
+            await _db.SaveChangesAsync();
+
+            testResultJson.id = testResult.Id;
+
+            return new JsonResult(testResultJson);
+        }
+
+        // GET /setTestResult
+        [Route("getTestResults")]
+        [HttpGet]
+        public async Task<ActionResult<TestResultJson>> GetTestResults(int? userId, int? page, string sort, int limit = 6)
+        {
+            List<TestResultJson> testResultsJson = new List<TestResultJson>();
+            List<TestResult> testResults = await _db.TestResults.ToListAsync();
+
+            if (userId != null)
+            {
+                User user = await _db.Users.FirstOrDefaultAsync(el => el.Id == userId);
+                if (user == null)
+                {
+                    return NotFound("Пользователь не найден!");
+                }
+                testResults = testResults.Where(el => el.User.Id == userId).ToList();
+            }
+
+            // Сортировка списка проектов домов
+            if (sort != null)
+            {
+                switch (sort)
+                {
+                    case "workExperience":
+                        {
+                            testResults = testResults.OrderBy(el => el.User.WorkExperience).ToList();
+                            break;
+                        }
+                    case "-workExperience":
+                        {
+                            testResults = testResults.OrderByDescending(el => el.User.WorkExperience).ToList();
+                            break;
+                        }
+
+                    case "result":
+                        {
+                            testResults = testResults.OrderBy(el => el.CountTrueAnswers).ToList();
+                            break;
+                        }
+                    case "-result":
+                        {
+                            testResults = testResults.OrderByDescending(el => el.CountTrueAnswers).ToList();
+                            break;
+                        }
+                }
+            }
+            int amountPages = Convert.ToInt32(Math.Ceiling(testResults.Count / (float)limit));
+
+            if (page != null)
+            {
+                testResults = testResults.Skip(limit * ((int)page - 1)).Take(limit).ToList();
+            }
+
+            testResults.ForEach(el =>
+            {
+                testResultsJson.Add(new TestResultJson()
+                {
+                    id = el.Id,
+                    userId = el.UserId,
+                    testId = el.TestId,
+                    timeSpent = el.TimeSpent,
+                    countTrueAnswers = el.CountTrueAnswers,
+                    countQuestions = el.CountQuestions,
+                    DatePassing = el.DatePassing,
+                    testName = el.Test.Name
+                });
+            });
+
+            ResponseTestResultnJson responseTestResult = new ResponseTestResultnJson()
+            {
+                items = testResultsJson,
+                amountPages = amountPages
+            };
+            return new JsonResult(responseTestResult);
         }
     }
 }

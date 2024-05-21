@@ -47,6 +47,10 @@ export const testAPI = {
     return testInstance.delete(`deleteQuestion/${questionId}`)
   },
 
+  acceptQuestion(questionId) {
+    return testInstance.get(`acceptQuestion/${questionId}`)
+  },
+
   updateQuestion(question) {
     return testInstance.put(`updateQuestion/${question.id}`, question)
   }
@@ -64,6 +68,12 @@ export const userAPI = {
   },
   getJobs() {
     return userInstance.get('jobs').then(({ data }) => data);
+  },
+  getTestResults(userId) {
+    return userInstance.get(`getTestResults?userId=${userId}`);
+  },
+  setTestResult(testResult) {
+    return userInstance.post('setTestResult', testResult);
   }
 };
 

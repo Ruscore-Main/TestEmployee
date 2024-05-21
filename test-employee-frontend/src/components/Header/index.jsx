@@ -6,11 +6,12 @@ import classNames from 'classnames';
 import { useAuth } from 'hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import { removeUser } from '../../redux/slices/userSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const { isAuth, role } = useAuth();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <div className={s.header}>
@@ -24,7 +25,7 @@ const Header = () => {
         {isAuth && (
           <div className={s.icons}>
             {role == 'Employee' && (
-              <button className="button button--outline">История тестов</button>
+              <button onClick={() => navigate("test-results")} className="button button--outline">История тестов</button>
             )}
             <img
               className={classNames(s.icon, s.icon_small)}

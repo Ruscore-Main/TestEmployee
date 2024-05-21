@@ -64,7 +64,7 @@ const CurrentQuestion = ({ id, questionText, answers, onClickNext }) => {
           ),
         )}
       </fieldset>
-      <button className="button" onClick={onClickNext}>
+      <button className="button" onClick={() => onClickNext(countCurrentBall)}>
         Далее
       </button>
     </div>

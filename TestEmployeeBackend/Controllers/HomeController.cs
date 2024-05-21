@@ -27,7 +27,7 @@ namespace TestEmployeeBackend.Controllers
             List<Test> allTests = await _db.Tests.ToListAsync();
             if (jobId != null)
             {
-                allTests = allTests.Where(el => el.JobTitleId == jobId).ToList();
+                allTests = allTests.Where(el => el.JobTitleId == jobId).Where(el => el.Questions.Count > 0).Where(el => el.Questions.Any(q => q.Status != "Ожидает подтверждения")).ToList();
             }
 
             int amountPages = Convert.ToInt32(Math.Ceiling(allTests.Count / (float)limit));
@@ -227,6 +227,24 @@ namespace TestEmployeeBackend.Controllers
             return Ok(foundQuestion);
         }
 
+        [HttpGet]
+        [Route("acceptQuestion/{id}")]
+        public async Task<ActionResult<TestJson>> AcceptQuestion(int id)
+        {
+            Question foundQuestion = await _db.Questions.FirstOrDefaultAsync(el => el.Id == id);
+
+            if (foundQuestion == null)
+            {
+                return NotFound();
+            }
+
+            foundQuestion.Status = "Утвержден";
+
+            await _db.SaveChangesAsync();
+
+            return Ok(foundQuestion);
+        }
+
         [HttpPut]
         [Route("updateQuestion/{id}")]
         public async Task<ActionResult<TestJson>> UpdateQuestion(QuestionJson question)
@@ -244,5 +262,7 @@ namespace TestEmployeeBackend.Controllers
 
             return Ok(foundQuestion);
         }
+
+
     }
 }

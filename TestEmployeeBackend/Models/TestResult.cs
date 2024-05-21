@@ -11,6 +11,9 @@ namespace TestEmployeeBackend.Models
         public int? UserId { get; set; }
         public int? TestId { get; set; }
         public int? TimeSpent { get; set; }
+        public double? CountTrueAnswers { get; set; }
+        public int? CountQuestions { get; set; }
+
         public DateTime? DatePassing { get; set; }
 
         public virtual Test Test { get; set; }

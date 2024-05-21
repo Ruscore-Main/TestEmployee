@@ -8,7 +8,7 @@ import {
   setCurrentQuestionPage,
   setSearchQuestion,
 } from '../redux/slices/questionSlice';
-import { deleteQuestion } from '../redux/slices/fullTestSlice';
+import { acceptQuestion, deleteQuestion } from '../redux/slices/fullTestSlice';
 import swal from 'sweetalert';
 
 const QuestionList = () => {
@@ -34,7 +34,7 @@ const QuestionList = () => {
         updateTable();
         swal({
           icon: 'success',
-          text: 'Вопрос успешно добавлен!',
+          text: 'Вопрос отклонен!',
         });
       } else {
         swal({
@@ -44,6 +44,23 @@ const QuestionList = () => {
       }
     });
   };
+
+  const onClickAccept = (id) => {
+    dispatch(acceptQuestion(id)).then((res) => {
+      if (res.payload?.id !== undefined) {
+        updateTable();
+        swal({
+          icon: 'success',
+          text: 'Вопрос утвержден!',
+        });
+      } else {
+        swal({
+          icon: 'error',
+          text: res.payload,
+        });
+      }
+    });
+  }
 
   React.useEffect(() => {
     updateTable();
@@ -77,7 +94,7 @@ const QuestionList = () => {
                 <td>{question.questionText}</td>
                 <td>{question.status}</td>
                 <td>
-                  <button className='button button--outline'>Утвердить</button>
+                  <button className='button button--outline' onClick={() => onClickAccept(question.id)}>Утвердить</button>
                 </td>
                 <td>
                   <button className='button button--outline' onClick={() => onClickDelete(question.id)}>

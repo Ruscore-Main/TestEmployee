@@ -19,6 +19,8 @@ namespace TestEmployeeBackend.Models
         public string phoneNumber { get; set; }
         public int? jobId { get; set; }
         public string jobTitle { get; set; }
+
+        public List<TestResultJson> testResults { get; set; }
     }
 
     // Json Model of Test
@@ -52,6 +54,19 @@ namespace TestEmployeeBackend.Models
         public List<AnswerJson> answers { get; set; }
     }
 
+    // Json Model of TestResult
+    public class TestResultJson
+    {
+        public int id { get; set; }
+        public int? userId { get; set; }
+        public int? testId { get; set; }
+        public string testName { get; set; }
+        public int? timeSpent { get; set; }
+        public double? countTrueAnswers { get; set; }
+        public int? countQuestions { get; set; }
+        public DateTime? DatePassing { get; set; }
+    }
+
     // Json Model for User list
     public class ResponseTestJson
     {
@@ -80,5 +95,12 @@ namespace TestEmployeeBackend.Models
     {
         public int amountPages { get; set; }
         public List<QuestionJson> items { get; set; }
+    }
+
+    // Json Model for Question list
+    public class ResponseTestResultnJson
+    {
+        public int amountPages { get; set; }
+        public List<TestResultJson> items { get; set; }
     }
 }

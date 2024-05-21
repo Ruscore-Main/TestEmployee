@@ -18,6 +18,12 @@ export const deleteQuestion = createAsyncThunk('tests/deleteQuestion', async (pa
   return question;
 });
 
+export const acceptQuestion = createAsyncThunk('tests/acceptQuestion', async (params) => {
+  const question = (await testAPI.acceptQuestion(params)).data;
+
+  return question;
+});
+
 export const updateQuestion = createAsyncThunk('tests/updateQuestion', async (params) => {
   const question = (await testAPI.updateQuestion(params)).data;
 

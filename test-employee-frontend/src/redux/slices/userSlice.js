@@ -32,6 +32,16 @@ export const updateUser = createAsyncThunk('user/updateUser', async (params) => 
   }
 });
 
+export const getTestResults = createAsyncThunk('user/getTestResults', async (params) => {
+  const testResults = (await userAPI.getTestResults(params)).data;
+  return testResults;
+});
+
+export const setTestResult = createAsyncThunk('user/setTestResult', async (params) => {
+  const user = (await userAPI.setTestResult(params)).data;
+  return user;
+});
+
 const initialState = {
   id: null,
   login: null,
@@ -44,7 +54,7 @@ const initialState = {
   phoneNumber: null,
   jobId: null,
   jobTitle: "",
-  testResults: [],
+  testResults: []
 };
 
 const userSlice = createSlice({
@@ -87,11 +97,18 @@ const userSlice = createSlice({
         userSlice.caseReducers.setUser(state, action);
       }
     });
+
     builder.addCase(updateUser.fulfilled, (state, action) => {
       if (action.payload?.id) {
         state.login = action.payload.login;
         state.email = action.payload.email;
         state.phoneNumber = action.payload.phoneNumber;
+      }
+    });
+
+    builder.addCase(getTestResults.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.testResults = action.payload.items;
       }
     });
   },
