@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import s from './Header.module.scss';
 import accountIcon from 'assets/img/account.svg';
 import logoutIcom from 'assets/img/logout.svg';
@@ -10,8 +10,19 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const { isAuth, role } = useAuth();
+  const { ...user } = useAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isMounted = useRef(false);
+
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(user);
+      localStorage.setItem('user', json);
+    }
+    isMounted.current = true;
+  }, [user.isAuth, user.favorites]);
 
   return (
     <div className={s.header}>

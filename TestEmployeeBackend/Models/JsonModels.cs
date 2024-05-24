@@ -59,6 +59,7 @@ namespace TestEmployeeBackend.Models
     {
         public int id { get; set; }
         public int? userId { get; set; }
+        public int? workExperience { get; set; }
         public int? testId { get; set; }
         public string testName { get; set; }
         public int? timeSpent { get; set; }

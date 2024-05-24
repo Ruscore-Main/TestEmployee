@@ -19,7 +19,7 @@ const EmployeePage = () => {
         jobId,
       }),
     );
-  }, []);
+  }, [testResults]);
 
   if (!isAuth) {
     return <Navigate to="/login" />;

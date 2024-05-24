@@ -17,7 +17,7 @@ const initialState = {
   status: 'loading', // loading | error | success
   items: [],
   amountPages: null,
-  currentPage: 1,
+  currentPage: 1
 };
 
 const testSlice = createSlice({
@@ -44,11 +44,6 @@ const testSlice = createSlice({
     builder.addCase(fetchTests.rejected, (state) => {
       state.status = 'error';
       state.items = [];
-    });
-
-    builder.addCase(addTest.fulfilled, (state) => {
-
-
     });
   },
 });

@@ -14,7 +14,7 @@ const TestResults = () => {
   React.useEffect(() => {
     setStatus('loading')
     dispatch(getTestResults(id)).then((res) => {
-        setStatus('success')
+      setStatus('success')
     }).catch(err => setStatus('error'));
   }, []);
 

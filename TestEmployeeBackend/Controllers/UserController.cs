@@ -180,7 +180,7 @@ namespace TestEmployeeBackend.Controllers
         // GET /setTestResult
         [Route("getTestResults")]
         [HttpGet]
-        public async Task<ActionResult<TestResultJson>> GetTestResults(int? userId, int? page, string sort, int limit = 6)
+        public async Task<ActionResult<TestResultJson>> GetTestResults(int? userId, int? page, string sort, int limit = 10)
         {
             List<TestResultJson> testResultsJson = new List<TestResultJson>();
             List<TestResult> testResults = await _db.TestResults.ToListAsync();
@@ -236,6 +236,7 @@ namespace TestEmployeeBackend.Controllers
                 {
                     id = el.Id,
                     userId = el.UserId,
+                    workExperience = el.User.WorkExperience,
                     testId = el.TestId,
                     timeSpent = el.TimeSpent,
                     countTrueAnswers = el.CountTrueAnswers,

@@ -70,7 +70,7 @@ const ProfileBlock = () => {
       </div>
       <div className={s.data}>
         <span>ФИО: </span>
-        <input type="text" placeholder="Email" className="input" value={fio} onChange={(e) => setFio(e.target.value)} />
+        <input type="text" placeholder="ФИО" className="input" value={fio} onChange={(e) => setFio(e.target.value)} />
       </div>
       <div className={s.data}>
         <span>Дата рождения: </span>

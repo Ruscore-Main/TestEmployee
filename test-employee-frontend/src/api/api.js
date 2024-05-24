@@ -86,4 +86,8 @@ export const adminAPI = {
     }
     return adminInstance.get(fetchURL).then(({ data }) => data);
   },
+  getTestResults(params) {
+    console.log(`getTestResults?page=${params.currentPage}&sort=${params.sortBy.sort}`)
+    return userInstance.get(`getTestResults?page=${params.currentPage}&sort=${params.sortBy.sort}`);
+  }
 }

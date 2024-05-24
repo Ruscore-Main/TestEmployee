@@ -5,8 +5,7 @@ const toTimeString = (seconds) => new Date(seconds * 1000).toISOString().substr(
 function Timer({ expiryTimestamp, onEnd, setSpentTime }) {
   const { totalSeconds, start } = useTimer({
     expiryTimestamp,
-    onExpire: () => onEnd(),
-    
+    onExpire: () => onEnd(0)
   });
 
   setSpentTime(totalSeconds);

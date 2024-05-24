@@ -10,20 +10,20 @@ import swal from 'sweetalert';
 import s from './TakeTest.module.scss';
 import TestResult from 'components/TestResult';
 import { setTestResult } from '../../redux/slices/userSlice';
-
+import Chart from 'components/Chart';
 
 const toTimeString = (seconds) => new Date(seconds * 1000).toISOString().substr(11, 8);
 
 const TakeTest = () => {
   const { id } = useParams();
-  const {isAuth, id: userId} = useAuth();
+  const { isAuth, id: userId } = useAuth();
   const dispatch = useDispatch();
   const { jobId: userJobId } = useAuth();
   const [isTestStarted, setIsTestStarted] = useState(false);
   const [isTestEnded, setIsTestEnded] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [countTrue, setCountTrue] = useState(0);
-  const spentTime = useRef(0)
+  const spentTime = useRef(0);
 
   const { name, timeTest, jobId, questions, status } = useSelector(({ fullTest }) => fullTest);
 
@@ -47,24 +47,25 @@ const TakeTest = () => {
   if (userJobId !== jobId) {
     return <NotFound />;
   }
-  
 
   const time = new Date();
   time.setSeconds(time.getSeconds() + timeTest);
-  console.log(countTrue)
+  console.log(countTrue);
   const onEnd = (resultBall) => {
     setIsTestEnded(true);
-    console.log("RESULTTTT ", countTrue);
+    console.log('RESULTTTT ', countTrue);
 
-    dispatch(setTestResult({
-      userId,
-      testId: id,
-      timeSpent: spentTime.current,
-      countTrueAnswers: resultBall,
-      countQuestions: questions.length,
-      datePassing: (new Date()).toISOString() 
-    }))
-  } 
+    dispatch(
+      setTestResult({
+        userId,
+        testId: id,
+        timeSpent: spentTime.current,
+        countTrueAnswers: resultBall,
+        countQuestions: questions.length,
+        datePassing: new Date().toISOString(),
+      }),
+    );
+  };
 
   const onClickNext = (ball) => {
     setCountTrue(countTrue + ball);
@@ -80,24 +81,33 @@ const TakeTest = () => {
     <div className="container">
       <h1>{name}</h1>
       <p>Общее время теста: {toTimeString(timeTest)}</p>
-      {(isTestStarted && !isTestEnded) && (
+      {isTestStarted && !isTestEnded && (
         <div className={s.questionBlock}>
           <Timer
             expiryTimestamp={time}
             setSpentTime={(val) => {
-              spentTime.current = timeTest-val
+              spentTime.current = timeTest - val;
             }}
-            onEnd={() => {
-              console.log('ТЕСТ ЗАВЕРШЕН');
-            }}
+            onEnd={onEnd}
           />
           <div className={s.progress}>
-            <div style={{ width: `${(questionIndex/questions.length)*100}%` }} className={s.progress__inner}></div>
+            <div
+              style={{ width: `${(questionIndex / questions.length) * 100}%` }}
+              className={s.progress__inner}></div>
           </div>
-          <CurrentQuestion {...questions[questionIndex]} onClickNext={(ball) => onClickNext(ball)} />
+          <CurrentQuestion
+            {...questions[questionIndex]}
+            onClickNext={(ball) => onClickNext(ball)}
+          />
         </div>
       )}
-      {isTestEnded && <TestResult countTrue={countTrue} countQuestions={questions.length} spentTime={spentTime.current}/>}
+      {isTestEnded && (
+        <TestResult
+          countTrue={countTrue}
+          countQuestions={questions.length}
+          spentTime={spentTime.current}
+        />
+      )}
       {isTestStarted || (
         <button className="button button--outline" onClick={() => setIsTestStarted(true)}>
           Начать

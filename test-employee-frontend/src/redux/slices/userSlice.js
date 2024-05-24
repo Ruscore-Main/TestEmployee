@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { userAPI } from 'api/api';
+import { getUserFromLS } from 'utils/getUserFromLS';
 
 // Регистрация пользователя
 export const regUser = createAsyncThunk('user/regUser', async (params) => {
@@ -42,20 +43,8 @@ export const setTestResult = createAsyncThunk('user/setTestResult', async (param
   return user;
 });
 
-const initialState = {
-  id: null,
-  login: null,
-  password: null,
-  role: null,
-  fio: null,
-  workExperience: null,
-  dateOfBirth: null,
-  email: null,
-  phoneNumber: null,
-  jobId: null,
-  jobTitle: "",
-  testResults: []
-};
+
+const initialState = getUserFromLS();
 
 const userSlice = createSlice({
   name: 'user',
@@ -111,6 +100,12 @@ const userSlice = createSlice({
         state.testResults = action.payload.items;
       }
     });
+
+    builder.addCase(setTestResult.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.testResults = [...state.testResults, action.payload];
+      }
+    })
   },
 });
 
