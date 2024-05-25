@@ -64,7 +64,7 @@ namespace TestEmployeeBackend.Controllers
 
             userJson.id = newUser.Id;
             userJson.role = newUser.Role.RoleName;
-            userJson.jobTitle = newUser.JobTitle.JobTitleName;
+            userJson.jobTitle = newUser.JobTitle?.JobTitleName;
             userJson.testResults = new List<TestResultJson>();
 
             return new JsonResult(userJson);
@@ -97,7 +97,7 @@ namespace TestEmployeeBackend.Controllers
                 email = currentUser.Email,
                 phoneNumber = currentUser.PhoneNumber,
                 jobId = currentUser.JobTitleId,
-                jobTitle = currentUser.JobTitle.JobTitleName
+                jobTitle = currentUser.JobTitle?.JobTitleName
             };
 
             List<TestResultJson> testResultsJson = new List<TestResultJson>();
@@ -147,13 +147,13 @@ namespace TestEmployeeBackend.Controllers
             user.DateOfBirth = userJson.dateOfBirth;
             user.Email = userJson.email;
             user.PhoneNumber = userJson.phoneNumber;
-            
+
 
             await _db.SaveChangesAsync();
 
             return new JsonResult(userJson);
         }
-         
+
         // Post /setTestResult
         [Route("setTestResult")]
         [HttpPost]
